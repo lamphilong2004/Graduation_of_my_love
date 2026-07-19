@@ -79,17 +79,18 @@ body, html {
 }
 .elegant-hint {
   font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+  font-weight: 700;
   font-style: italic;
-  color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8), 0 0 15px #ff4d6d;
   letter-spacing: 2px;
   white-space: nowrap;
   animation: breathingText 2.5s ease-in-out infinite alternate;
 }
 @keyframes breathingText {
-  0% { transform: scale(0.95); opacity: 0.6; }
-  100% { transform: scale(1.05); opacity: 1; text-shadow: 0 4px 15px rgba(255,255,255,0.4); }
+  0% { transform: scale(0.95); opacity: 0.8; text-shadow: 0 2px 4px rgba(0,0,0,0.8), 0 0 10px #ff4d6d; }
+  100% { transform: scale(1.05); opacity: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.8), 0 0 20px #ff4d6d, 0 0 35px #ff4d6d; }
 }
 /* Khi cửa mở, icon to lên và mờ dần */
 .door-overlay.open .door-center-icon {
