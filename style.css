@@ -55,14 +55,12 @@ body, html {
 }
 .door-left { 
   transform-origin: left; 
-  border-right: 2px solid var(--accent-gold); 
 }
 .door-left::before {
   left: 0;
 }
 .door-right { 
   transform-origin: right; 
-  border-left: 2px solid var(--accent-gold); 
 }
 .door-right::before {
   left: -50vw;
