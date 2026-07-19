@@ -71,25 +71,47 @@ body, html {
 
 .door-center-icon {
   position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 250px;
+  bottom: 8%; left: 50%;
+  transform: translateX(-50%);
   z-index: 10001;
   transition: all 1s ease;
   cursor: pointer;
-  animation: floatIcon 3s ease-in-out infinite alternate;
+  animation: bounceHint 2s infinite alternate;
 }
-.door-center-icon img {
-  width: 100%;
-  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+@keyframes bounceHint {
+  0% { transform: translateX(-50%) translateY(0); }
+  100% { transform: translateX(-50%) translateY(-10px); }
 }
-@keyframes floatIcon {
-  0% { transform: translate(-50%, -50%) scale(1); }
-  100% { transform: translate(-50%, -55%) scale(1.05); }
+.tap-indicator {
+  width: 60px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  position: relative;
+}
+.tap-indicator::after {
+  content: "";
+  position: absolute;
+  top: -2px; left: -2px; right: -2px; bottom: -2px;
+  border: 2px solid white;
+  border-radius: 50%;
+  animation: tapRipple 1.5s infinite;
+}
+@keyframes tapRipple {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.6); opacity: 0; }
 }
 /* Khi cửa mở, icon to lên và mờ dần */
 .door-overlay.open .door-center-icon {
-  transform: translate(-50%, -50%) scale(1.5);
+  transform: translateX(-50%) scale(1.5);
   opacity: 0;
   pointer-events: none;
 }
