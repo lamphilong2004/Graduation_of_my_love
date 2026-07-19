@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thư Mời Tốt Nghiệp - Hồ Thị Thùy Linh</title>
+
+  <!-- Fonts & Swiper -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,600&family=Montserrat:wght@400;500;600;700&family=Great+Vibes&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- SVG Filter cho hiệu ứng Gooey (Text Morphing) -->
+  <svg style="display: none;">
+    <defs>
+      <filter id="threshold">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 255 -140" />
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- 1. CÁNH CỬA MỞ RA (DOOR ANIMATION) -->
+  <div id="door-overlay" class="door-overlay">
+    <div class="door door-left"></div>
+    <div class="door door-right"></div>
+    <div class="door-center-icon" id="door-icon">
+      <div
+        style="background: rgba(0,0,0,0.6); color: white; padding: 10px 20px; border-radius: 30px; border: 1px solid white; font-weight: bold; letter-spacing: 1px; backdrop-filter: blur(5px);">
+        Chạm để mở thiệp
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. OVERLAY NGHE NHẠC (CLICK TO PLAY) -->
+  <div id="music-overlay" class="music-overlay hidden">
+    <div class="music-prompt">
+      <i class="fas fa-compact-disc spin-icon"></i>
+      <h2>Cùng nghe nhạc nhé!</h2>
+      <p>Chạm vào màn hình để bắt đầu nghe nhạc</p>
+    </div>
+  </div>
+
+  <!-- BỘ PHÁT NHẠC ẨN -->
+  <!-- <audio id="bg-music" src="nhac_cua_ban.mp3" loop></audio> -->
+
+  <!-- 3. GIAO DIỆN CHÍNH -->
+  <div class="main-container hidden" id="main-content">
+
+    <!-- Vùng chứa các hiệu ứng bay bay chill -->
+    <div id="floating-container"></div>
+
+    <!-- Hero Section (Dạng Tự Do, Không khung) -->
+    <section class="hero-section new-hero">
+      <div class="watercolor-bg"></div>
+
+      <div class="hero-content">
+        <!-- Hình tròn đại diện -->
+        <div class="avatar-container">
+          <img src="images/40.jpg" alt="Avatar">
+        </div>
+
+        <div class="hero-text-wrapper">
+          <div class="alternating-title">
+            <h2 class="hero-subtitle text-1">Graduation Ceremony</h2>
+            <h2 class="hero-subtitle text-2">Lễ Tốt Nghiệp</h2>
+          </div>
+          <h1 class="hero-title text-1">Hồ Thị Thùy Linh</h1>
+
+          <div class="date-row">
+            <span class="cd-date">25</span> &nbsp;|&nbsp; <span class="cd-month">Tháng 07</span> &nbsp;|&nbsp; <span
+              class="cd-year">2026</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Background giấy Vintage cho toàn bộ phần dưới -->
+    <div class="vintage-paper">
+
+      <!-- Thư Mời Section -->
+      <section class="letter-section animate-on-scroll">
+        <div class="letter-card">
+          <h2 class="section-title" style="color: #ff4d6d; text-transform: none; font-size: 2rem; margin-bottom: 20px;">
+            Thư mời</h2>
+          <div class="letter-content" style="text-align: left; line-height: 1.6; color: #333;">
+            <p>👋 <strong>Xin chào cả nhà thân yêu,</strong></p>
+            <p>Khoảnh khắc này cuối cùng cũng đã tới! Ngày <strong>25/07/2026</strong> này đánh dấu việc mình chính thức
+              hoàn thành chặng đường đại học và bước sang một chương mới của cuộc đời!</p>
+            <p>Mình biết để có được thành quả này, ngoài nỗ lực của bản thân, không thể thiếu những lời động viên, những
+              lần "cứu trợ" bài tập và những buổi cà phê xả stress cùng các cậu. Cảm ơn tất cả mọi người thật nhiều!</p>
+            <p>Mình sẽ có mặt tại khu vực <strong>sảnh chờ</strong> sau khi kết thúc buổi lễ. Đây sẽ là dịp tuyệt vời để
+              chúng ta gặp gỡ, <strong>chụp thật nhiều ảnh kỷ niệm</strong> lưu giữ khoảnh khắc này, và cùng nhau chia
+              sẻ niềm vui tốt nghiệp.</p>
+
+            <p style="margin-top: 20px; font-size: 1.1rem;"><strong>Thông tin Lễ Tốt Nghiệp:</strong></p>
+            <ul style="list-style-type: disc; margin-left: 20px; margin-bottom: 20px; line-height: 1.8;">
+              <li><strong>Thời gian:</strong> 10h00, Ngày 25/07/2026</li>
+              <li><strong>Địa điểm:</strong> Khu vực Sảnh Chờ tại Trường Đại học Công Nghệ Kỹ Thuật Tp.HCM</li>
+              <li><strong>Địa chỉ:</strong> 01 Đ. Võ Văn Ngân, Thủ Đức, Hồ Chí Minh, Việt Nam</li>
+            </ul>
+
+            <p>Không cần quà cáp hay quá cầu kỳ đâu, chỉ cần các cậu đến chung vui, tặng mình một cái ôm và chụp ảnh là
+              mình vui rồi. Các cậu cứ thoải mái sắp xếp thời gian ghé qua nhé!</p>
+            <p>Hẹn gặp mọi người tại sảnh chờ nhé! ❤️</p>
+            <p class="sign-off" style="text-align: right; margin-top: 30px;"><span class="signature"
+                style="font-family: 'Great Vibes', cursive; font-size: 3rem; color: #111;">Thùy Linh</span></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Calendar Section -->
+      <section class="calendar-section animate-on-scroll">
+        <h2 class="section-title cursive">Congratulations</h2>
+        <p class="cal-month">Tháng 07, 2026</p>
+        <table class="cal-table">
+          <tr>
+            <th>T2</th>
+            <th>T3</th>
+            <th>T4</th>
+            <th>T5</th>
+            <th>T6</th>
+            <th>T7</th>
+            <th>CN</th>
+          </tr>
+          <tr>
+            <td>-</td>
+            <td>-</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+            <td>11</td>
+            <td>12</td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td>14</td>
+            <td>15</td>
+            <td>16</td>
+            <td>17</td>
+            <td>18</td>
+            <td>19</td>
+          </tr>
+          <tr>
+            <td>20</td>
+            <td>21</td>
+            <td>22</td>
+            <td>23</td>
+            <td>24</td>
+            <td class="star-date">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#4a4a4a" stroke-width="1.5">
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                </polygon>
+              </svg>
+              <span>25</span>
+            </td>
+            <td>26</td>
+          </tr>
+          <tr>
+            <td>27</td>
+            <td>28</td>
+            <td>29</td>
+            <td>30</td>
+            <td>31</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+        </table>
+      </section>
+
+      <!-- Map Section -->
+      <section class="map-section animate-on-scroll">
+        <h2 class="section-title">Lễ tốt nghiệp</h2>
+        <p class="map-desc">Sự hiện diện của bạn là niềm vinh hạnh của mình</p>
+        <p class="map-address"><strong>Sảnh chờ Trường Đại học Công nghệ Kỹ thuật Thành phố Hồ Chí Minh</strong></p>
+
+        <div class="map-wrapper">
+          <iframe
+            src="https://maps.google.com/maps?q=Trường%20Đại%20học%20Công%20nghệ%20Kỹ%20thuật%20Thành%20phố%20Hồ%20Chí%20Minh,%2001%20Võ%20Văn%20Ngân&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+        <button class="dark-btn"
+          onclick="window.open('https://www.google.com/maps/search/?api=1&query=Trường+Đại+học+Công+nghệ+Kỹ+thuật+Thành+phố+Hồ+Chí+Minh+1+Võ+Văn+Ngân', '_blank')"><i
+            class="fas fa-map-marker-alt"></i> Mở Google Maps</button>
+
+        <div class="parking-info">
+          <p>Nếu bạn có đi xe đến, bạn có thể gửi xe nhé:</p>
+        </div>
+      </section>
+
+      <!-- Album Section (Coverflow) -->
+      <section class="album-section animate-on-scroll">
+        <h2 class="section-title" style="color: #ff4d6d; text-transform: none; font-size: 2rem;">Kỷ niệm tốt nghiệp</h2>
+
+        <!-- Khu vực bạn có thể chèn bao nhiêu ảnh tùy thích -->
+        <div class="swiper mySwiper">
+          <div class="swiper-wrapper">
+            <!-- Ảnh 1 -->
+            <div class="swiper-slide"><img src="images/1.jpg" /></div>
+            <!-- Ảnh 2 -->
+            <div class="swiper-slide"><img src="images/2.jpg" /></div>
+            <!-- Ảnh 3 -->
+            <div class="swiper-slide"><img src="images/3.jpg" /></div>
+            <!-- Ảnh 4 -->
+            <div class="swiper-slide"><img src="images/4.jpg" /></div>
+            <!-- Ảnh 5 -->
+            <div class="swiper-slide"><img src="images/5.jpg" /></div>
+            <!-- Ảnh 6 -->
+            <div class="swiper-slide"><img src="images/6.jpg" /></div>
+            <!-- Ảnh 7 -->
+            <div class="swiper-slide"><img src="images/7.jpg" /></div>
+            <!-- Ảnh 8 -->
+            <div class="swiper-slide"><img src="images/8.jpg" /></div>
+            <!-- Ảnh 9 -->
+            <div class="swiper-slide"><img src="images/9.jpg" /></div>
+            <!-- Ảnh 10 -->
+            <div class="swiper-slide"><img src="images/10.jpg" /></div>
+            <!-- Ảnh 11 -->
+            <div class="swiper-slide"><img src="images/11.jpg" /></div>
+            <!-- Ảnh 12 -->
+            <div class="swiper-slide"><img src="images/12.jpg" /></div>
+            <!-- Ảnh 13 -->
+            <div class="swiper-slide"><img src="images/13.jpg" /></div>
+            <!-- Ảnh 14 -->
+            <div class="swiper-slide"><img src="images/14.jpg" /></div>
+            <!-- Ảnh 15 -->
+            <div class="swiper-slide"><img src="images/15.jpg" /></div>
+            <!-- Ảnh 16 -->
+            <div class="swiper-slide"><img src="images/16.jpg" /></div>
+            <!-- Ảnh 17 -->
+            <div class="swiper-slide"><img src="images/17.jpg" /></div>
+            <!-- Ảnh 18 -->
+            <div class="swiper-slide"><img src="images/18.jpg" /></div>
+            <!-- Ảnh 19 -->
+            <div class="swiper-slide"><img src="images/19.jpg" /></div>
+            <!-- Ảnh 20 -->
+            <div class="swiper-slide"><img src="images/20.jpg" /></div>
+            <!-- Ảnh 21 -->
+            <div class="swiper-slide"><img src="images/21.jpg" /></div>
+            <!-- Ảnh 22 -->
+            <div class="swiper-slide"><img src="images/22.jpg" /></div>
+            <!-- Ảnh 23 -->
+            <div class="swiper-slide"><img src="images/23.jpg" /></div>
+            <!-- Ảnh 24 -->
+            <div class="swiper-slide"><img src="images/24.jpg" /></div>
+            <!-- Ảnh 25 -->
+            <div class="swiper-slide"><img src="images/25.jpg" /></div>
+            <!-- Ảnh 26 -->
+            <div class="swiper-slide"><img src="images/26.jpg" /></div>
+            <!-- Ảnh 27 -->
+            <div class="swiper-slide"><img src="images/27.jpg" /></div>
+            <!-- Ảnh 28 -->
+            <div class="swiper-slide"><img src="images/28.jpg" /></div>
+            <!-- Ảnh 29 -->
+            <div class="swiper-slide"><img src="images/29.jpg" /></div>
+            <!-- Ảnh 30 -->
+            <div class="swiper-slide"><img src="images/30.jpg" /></div>
+            <!-- Ảnh 31 -->
+            <div class="swiper-slide"><img src="images/31.jpg" /></div>
+            <!-- Ảnh 32 -->
+            <div class="swiper-slide"><img src="images/32.jpg" /></div>
+            <!-- Ảnh 33 -->
+            <div class="swiper-slide"><img src="images/33.jpg" /></div>
+            <!-- Ảnh 34 -->
+            <div class="swiper-slide"><img src="images/34.jpg" /></div>
+            <!-- Ảnh 35 -->
+            <div class="swiper-slide"><img src="images/35.jpg" /></div>
+            <!-- Ảnh 36 -->
+            <div class="swiper-slide"><img src="images/36.jpg" /></div>
+            <!-- Ảnh 37 -->
+            <div class="swiper-slide"><img src="images/37.jpg" /></div>
+            <!-- Ảnh 38 -->
+            <div class="swiper-slide"><img src="images/38.jpg" /></div>
+            <!-- Ảnh 39 -->
+            <div class="swiper-slide"><img src="images/39.jpg" /></div>
+            <!-- Ảnh 40 -->
+            <div class="swiper-slide"><img src="images/40.jpg" /></div>
+            <!-- Ảnh 41 -->
+            <div class="swiper-slide"><img src="images/41.JPG" /></div>
+            <!-- Ảnh 42 -->
+            <div class="swiper-slide"><img src="images/42.jpg" /></div>
+            <!-- Ảnh 43 -->
+            <div class="swiper-slide"><img src="images/43.jpg" /></div>
+            <!-- Ảnh 44 -->
+            <div class="swiper-slide"><img src="images/44.jpg" /></div>
+            <!-- Ảnh 45 -->
+            <div class="swiper-slide"><img src="images/45.JPG" /></div>
+            <!-- Ảnh 46 -->
+            <div class="swiper-slide"><img src="images/46.jpg" /></div>
+            <!-- Ảnh 47 -->
+            <div class="swiper-slide"><img src="images/47.JPG" /></div>
+            <!-- Ảnh 48 -->
+            <div class="swiper-slide"><img src="images/48.jpg" /></div>
+            <!-- Ảnh 49 -->
+            <div class="swiper-slide"><img src="images/49.JPG" /></div>
+            <!-- Ảnh 50 -->
+            <div class="swiper-slide"><img src="images/50.jpg" /></div>
+            <!-- Ảnh 51 -->
+            <div class="swiper-slide"><img src="images/51.jpg" /></div>
+            <!-- Ảnh 52 -->
+            <div class="swiper-slide"><img src="images/52.JPG" /></div>
+            <!-- Ảnh 53 -->
+            <div class="swiper-slide"><img src="images/53.JPG" /></div>
+            <!-- Ảnh 54 -->
+            <div class="swiper-slide"><img src="images/54.JPG" /></div>
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </section>
+
+      <!-- Thank You Section -->
+      <section class="thankyou-section animate-on-scroll">
+        <h2 class="thankyou-title">Lời cảm ơn</h2>
+        <h2 class="section-title" style="color: #ff4d6d; text-transform: none; font-size: 2rem;">Hoàn thành hành trình -
+          Tri ân sâu sắc</h2>
+        <p class="thankyou-text" style="text-align: center; max-width: 800px; margin: 0 auto 30px;">Lời cảm ơn chân
+          thành nhất đến những người đã cùng mình vượt qua chặng đường này.</p>
+        <p class="thankyou-text" style="text-align: justify; max-width: 800px; margin: 0 auto 30px;">Khoảnh khắc nhận
+          bằng tốt nghiệp sắp tới là cả một <strong>hành trình dài</strong> được
+          gói gọn. Mình xin gửi lời tri ân chân thành nhất đến <strong>gia đình</strong> — điểm tựa vững chắc nhất, luôn
+          hy sinh và tin tưởng tuyệt đối. Cảm ơn <strong>thầy cô</strong> đã dẫn dắt, truyền đạt kiến thức quý giá. Và
+          cảm ơn <strong>bạn bè</strong>, những người đồng đội không thể thiếu. Mọi thành quả ngày hôm nay đều là nhờ sự
+          đồng hành của mọi người. Chiếc áo cử nhân này không phải là dấu chấm hết, mà là <strong>lời hứa cho một sự
+            khởi đầu mới!</strong></p>
+
+        <!-- Inline Form Gửi Lời Chúc -->
+        <div class="inline-wish-form animate-on-scroll">
+          <h3
+            style="font-family: 'Great Vibes', cursive; font-size: 2.2rem; color: var(--maroon); margin-bottom: 10px;">
+            Gửi Lời Chúc</h3>
+          <input type="text" id="inline-wish-name" placeholder="Tên của bạn..." required>
+          <textarea id="inline-wish-text" rows="3" placeholder="Nhập lời chúc..." required></textarea>
+          <button id="submit-inline-wish-btn" class="dark-btn" style="width: 100%;">Gửi Lời Chúc</button>
+        </div>
+
+        <p class="thankyou-ending">Hẹn mọi người tại buổi lễ nhé!</p>
+
+        <div class="footer-branding">
+
+          <div class="footer-icons">
+            <a href="https://www.facebook.com/linh.thuy.439417" target="_blank"
+              style="color: var(--text-dark); transition: 0.3s;" onmouseover="this.style.color='var(--maroon)'"
+              onmouseout="this.style.color='var(--text-dark)'">
+              <i class="fab fa-facebook"></i>
+            </a>
+            <div>https://www.facebook.com/linh.thuy.439417</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Padding for the bottom fixed elements -->
+      <div style="height: 100px;"></div>
+
+    </div> <!-- End vintage paper -->
+
+  </div> <!-- End main-container -->
+
+  <!-- 4. FIXED BOTTOM CONTROLS & CHAT (LIVE COMMENTS) -->
+  <div class="fixed-bottom-ui hidden" id="fixed-ui">
+    <!-- Nút nghe nhạc -->
+    <button class="music-toggle-btn" id="music-btn">
+      <i class="fas fa-volume-up"></i>
+    </button>
+
+    <!-- Khung chat trôi nổi -->
+    <div class="floating-chat" id="chat-container">
+      <!-- Lời chúc thật từ Firebase sẽ xuất hiện ở đây -->
+    </div>
+
+  </div>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div id="image-lightbox" class="lightbox hidden">
+    <span class="lightbox-close">&times;</span>
+    <img class="lightbox-content" id="lightbox-img">
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+
+</html>

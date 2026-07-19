@@ -1,0 +1,778 @@
+/* =========================================
+   VARIABLES & RESET
+========================================= */
+:root {
+  --door-bg: #9c6c27; /* Màu nâu vàng của cửa */
+  --door-pattern: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path d="M20 5 L25 15 L35 20 L25 25 L20 35 L15 25 L5 20 L15 15 Z" fill="%238a5b1f" opacity="0.3"/></svg>');
+  --paper-bg: #f9f6f0;
+  --text-dark: #333333;
+  --text-brown: #5d4037;
+  --accent-gold: #c0903c;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body, html {
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to right, #fff1f2, #ffffff, #fdf2f8); /* Gradient mượt mà chuẩn Tailwind */
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text-dark);
+  overflow-x: hidden;
+}
+
+/* =========================================
+   1. CÁNH CỬA (DOOR ANIMATION)
+========================================= */
+.door-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 10000;
+  display: flex;
+  pointer-events: auto;
+}
+.door {
+  width: 50%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  cursor: pointer;
+}
+.door::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('images/56.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #1a1a1a;
+  z-index: -1;
+}
+.door-left { 
+  transform-origin: left; 
+  border-right: 2px solid var(--accent-gold); 
+}
+.door-left::before {
+  left: 0;
+}
+.door-right { 
+  transform-origin: right; 
+  border-left: 2px solid var(--accent-gold); 
+}
+.door-right::before {
+  left: -50vw;
+}
+
+/* Khi có class .open, cửa mở ra 2 bên */
+.door-overlay.open .door-left { transform: translateX(-100%); }
+.door-overlay.open .door-right { transform: translateX(100%); }
+
+.door-center-icon {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  z-index: 10001;
+  transition: all 1s ease;
+  cursor: pointer;
+  animation: floatIcon 3s ease-in-out infinite alternate;
+}
+.door-center-icon img {
+  width: 100%;
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+}
+@keyframes floatIcon {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  100% { transform: translate(-50%, -55%) scale(1.05); }
+}
+/* Khi cửa mở, icon to lên và mờ dần */
+.door-overlay.open .door-center-icon {
+  transform: translate(-50%, -50%) scale(1.5);
+  opacity: 0;
+  pointer-events: none;
+}
+.door-overlay.hidden-fully {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* =========================================
+   2. MUSIC OVERLAY (CLICK TO PLAY)
+========================================= */
+.music-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(240, 244, 255, 0.95); /* Hơi xanh nhạt giống ảnh 2 */
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #3b2a5a;
+  cursor: pointer;
+  transition: opacity 0.5s;
+}
+.music-overlay.hidden {
+  opacity: 0; pointer-events: none;
+}
+.music-prompt h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 15px 0 10px;
+}
+.music-prompt p {
+  font-size: 0.9rem;
+}
+.spin-icon {
+  font-size: 3rem;
+  color: #5d5fdb;
+  animation: spin 3s linear infinite;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* =========================================
+   3. MAIN CONTAINER & HERO
+========================================= */
+.main-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+  box-shadow: 0 0 30px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.main-container.hidden { display: none; }
+
+.hero-section {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.watercolor-bg {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: url('images/hero_bg_pink.png') no-repeat center center;
+  background-size: cover;
+  opacity: 0.8; 
+  -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 40px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.avatar-container {
+  width: 240px; height: 240px; /* To hơn trên mobile/tablet */
+  border-radius: 50%;
+  padding: 8px;
+  margin-bottom: 25px;
+  background: linear-gradient(135deg, #ff8fa3, #ff4d6d);
+  box-shadow: 0 15px 35px rgba(255, 77, 109, 0.4), inset 0 0 10px rgba(255,255,255,0.5);
+  animation: floatAvatar 4s ease-in-out infinite;
+}
+@keyframes floatAvatar {
+  0% { transform: translateY(0); box-shadow: 0 15px 35px rgba(255, 77, 109, 0.4); }
+  50% { transform: translateY(-10px); box-shadow: 0 25px 45px rgba(255, 77, 109, 0.6); }
+  100% { transform: translateY(0); box-shadow: 0 15px 35px rgba(255, 77, 109, 0.4); }
+}
+
+.avatar-container img {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff; /* Viền mỏng bên trong */
+}
+
+.hero-text-wrapper {
+  position: relative;
+}
+.hero-text-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150%; height: 150%;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.alternating-title {
+  position: relative;
+  height: 3.5rem;
+  width: 100%;
+  margin-bottom: 5px;
+}
+.hero-subtitle {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.5rem;
+  color: #ff4d6d; /* Đỏ Hồng Tông Xuyệt Tông */
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+  margin: 0;
+  line-height: 1;
+  animation: elegantFade 8s infinite ease-in-out;
+}
+.hero-subtitle.text-1 {
+  animation-delay: 0s;
+}
+.hero-subtitle.text-2 {
+  animation-delay: -4s;
+}
+@keyframes elegantFade {
+  0% { opacity: 0; transform: translateY(10px); }
+  15%, 35% { opacity: 1; transform: translateY(0); }
+  50%, 100% { opacity: 0; transform: translateY(-10px); }
+}
+
+.hero-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: 4rem; /* Chữ uốn lượn nên cần to hơn */
+  font-weight: 400; /* Great vibes chỉ có weight 400 */
+  background: linear-gradient(90deg, #ff4d6d, #c9184a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 10px rgba(255, 77, 109, 0.2);
+  margin: 10px 0 15px 0;
+  text-transform: capitalize;
+}
+.date-row {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #c9184a; /* Hồng Ruby */
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+}
+.timer-row {
+  display: flex; justify-content: center; gap: 15px;
+}
+.time-box {
+  display: flex; flex-direction: column; align-items: center;
+}
+.time-box .val {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #ffa500; /* Cam */
+  line-height: 1;
+}
+.time-box .lbl {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #ffa500;
+  margin-top: 5px;
+}
+
+@media (min-width: 1024px) {
+  .hero-content {
+    flex-direction: row-reverse; /* Avatar bên phải, chữ bên trái */
+    gap: 10vw;
+    padding: 0 5vw;
+  }
+  .hero-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Căn giữa chữ trong cột trái */
+  }
+  .avatar-container {
+    width: 420px;
+    height: 420px;
+    margin-bottom: 0;
+    /* Loại bỏ border-width: 8px vì ta dùng background gradient */
+  }
+  .hero-title {
+    font-size: 5.5rem !important;
+  }
+  .hero-subtitle {
+    font-size: 3.5rem !important;
+  }
+  .time-box .val {
+    font-size: 2.5rem !important;
+  }
+}
+
+/* =========================================
+   VINTAGE PAPER SECTIONS & LETTER CARD
+========================================= */
+.vintage-paper {
+  padding: 40px 10px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.letter-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  background-image: url('images/pink_watercolor_custom.png');
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 15px;
+  padding: 40px 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  max-width: 700px;
+  margin: 0 auto 40px;
+}
+@media (min-width: 768px) {
+  .letter-card {
+    padding: 50px 40px;
+  }
+}
+.section-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text-dark);
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.section-title.cursive {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.5rem;
+  text-transform: none;
+  font-weight: 400;
+  letter-spacing: 0;
+  margin-bottom: 5px;
+}
+
+/* Thư Mời */
+.letter-section { margin-bottom: 40px; }
+.greeting { font-weight: 700; margin-bottom: 15px; font-size: 1.05rem; }
+.letter-content p {
+  font-size: 0.95rem; line-height: 1.8; margin-bottom: 15px; text-align: justify;
+}
+.sign-off { text-align: right; font-weight: 600; margin-top: 20px; }
+.signature { font-family: 'Great Vibes', cursive; font-size: 2.5rem; font-weight: 400; display: block; }
+
+/* Calendar */
+.calendar-section { 
+  margin: 0 auto 50px auto; 
+  text-align: center; 
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 25px;
+  padding: 40px 20px;
+  box-shadow: 0 15px 40px rgba(255, 77, 109, 0.15);
+  max-width: 600px;
+}
+.cal-month { font-size: 1.1rem; font-weight: 800; margin-bottom: 25px; text-transform: uppercase; color: #ff4d6d; letter-spacing: 2px; }
+.cal-table { width: 100%; border-collapse: collapse; font-size: 1.1rem; }
+.cal-table th { font-weight: 800; padding-bottom: 20px; color: #ff4d6d; }
+.cal-table td { padding: 15px 0; color: #555; font-weight: 600; }
+.star-date { 
+  position: relative; 
+  font-weight: 800 !important; 
+  color: #fff !important; 
+}
+.star-date::before {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 45px; height: 45px;
+  background: linear-gradient(135deg, #ff8fa3, #ff4d6d);
+  border-radius: 50%;
+  box-shadow: 0 5px 15px rgba(255, 77, 109, 0.5);
+  z-index: 0;
+  animation: pulseDate 2s infinite;
+}
+@keyframes pulseDate {
+  0% { box-shadow: 0 0 0 0 rgba(255, 77, 109, 0.6); }
+  70% { box-shadow: 0 0 0 15px rgba(255, 77, 109, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 77, 109, 0); }
+}
+.star-date svg { display: none; }
+.star-date span { position: relative; z-index: 1; }
+
+/* Map */
+.map-section { margin-bottom: 50px; text-align: center; }
+.map-desc { font-weight: 500; margin-bottom: 15px; font-size: 0.95rem; }
+.map-address { font-size: 1.1rem; margin-bottom: 20px; }
+.map-wrapper {
+  border-radius: 10px; overflow: hidden; margin-bottom: 20px; border: 2px solid #ddd;
+}
+.dark-btn {
+  background: #333; color: #fff; padding: 12px 25px; border-radius: 25px; border: none;
+  font-size: 1rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+}
+.parking-info {
+  text-align: left; margin-top: 25px; font-size: 0.9rem; line-height: 1.6;
+}
+.parking-info ul { margin-left: 20px; margin-top: 10px; }
+
+/* Timeline */
+.timeline-section { position: relative; padding-left: 10px; border-left: 2px solid var(--accent-gold); margin-left: 10px; }
+.timeline-section .section-title { text-align: left; margin-bottom: 30px; margin-left: -12px; }
+.timeline-item { position: relative; margin-bottom: 30px; }
+.date-pill {
+  background: #fff8e1; color: var(--text-dark); font-weight: 700; font-size: 0.85rem;
+  padding: 5px 15px; border-radius: 20px; display: inline-block; margin-bottom: 15px;
+  border: 1px solid var(--accent-gold);
+  position: relative; left: -25px;
+}
+.timeline-content img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+.timeline-content p { font-size: 0.95rem; line-height: 1.6; }
+
+/* =========================================
+   4. FIXED BOTTOM UI (MUSIC & CHAT)
+========================================= */
+.fixed-bottom-ui {
+  position: fixed;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 480px;
+  padding: 15px;
+  pointer-events: none; /* Let clicks pass through empty areas */
+  z-index: 8000;
+  display: flex; justify-content: space-between; align-items: flex-end;
+}
+.fixed-bottom-ui.hidden { display: none; }
+.fixed-bottom-ui > * { pointer-events: auto; }
+
+.music-toggle-btn {
+  width: 45px; height: 45px; background: #b8860b; color: white;
+  border: 2px solid #fff; border-radius: 50%; font-size: 1.2rem; cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.floating-chat {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 250px;
+  max-height: 200px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+  pointer-events: none;
+}
+@media (max-width: 1023px) {
+  .floating-chat {
+    width: 200px;
+    right: 10px;
+    bottom: 80px; /* Đẩy lên để khỏi đè phần countdown dưới đáy màn hình */
+    transform: scale(0.8);
+    transform-origin: bottom right;
+  }
+}
+.chat-bubble {
+  background: #b8860b; color: white; padding: 10px 15px; border-radius: 15px 15px 0 15px;
+  font-size: 0.85rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  animation: slideUp 0.5s ease-out;
+  max-width: 250px;
+}
+/* Để cho giống ảnh, màu khung chat vàng óng ánh */
+
+.send-wish-btn {
+  background: rgba(0,0,0,0.5); color: #fff; padding: 10px 20px;
+  border-radius: 20px; border: none; font-size: 0.9rem; cursor: not-allowed;
+  backdrop-filter: blur(5px); display: flex; align-items: center; gap: 10px;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animations Scroll */
+.animate-on-scroll {
+  opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out;
+}
+.animate-on-scroll.is-visible {
+  opacity: 1; transform: translateY(0);
+}
+
+/* =========================================
+   5. THANK YOU SECTION
+========================================= */
+.thankyou-section {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+.thankyou-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3.5rem;
+  color: var(--text-dark);
+  margin-bottom: 5px;
+}
+.thankyou-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  margin-bottom: 25px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+.thankyou-image-wrapper {
+  margin-bottom: 25px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.thankyou-img {
+  width: 100%;
+  display: block;
+}
+.thankyou-text {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  text-align: justify;
+  margin-bottom: 25px;
+}
+.thankyou-ending {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+.footer-branding {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  padding-top: 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.footer-icons {
+  display: flex;
+  gap: 12px;
+  font-size: 1.25rem;
+}
+
+/* =========================================
+   6. INLINE WISH FORM
+========================================= */
+.inline-wish-form {
+  background: var(--bg-white);
+  padding: 20px;
+  border-radius: 12px;
+  margin: 30px auto;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  border: 1px solid rgba(0,0,0,0.05);
+  text-align: center;
+}
+.inline-wish-form input,
+.inline-wish-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+.inline-wish-form textarea {
+  resize: vertical;
+}
+
+/* =========================================
+   7. FLOATING CHILL ANIMATION
+========================================= */
+#floating-container {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: 1; /* Nằm dưới text nhưng trên background */
+  overflow: hidden;
+}
+.floating-item {
+  position: absolute;
+  font-size: 1.5rem;
+  opacity: 0;
+  animation: floatUp 15s linear infinite;
+  user-select: none;
+}
+@keyframes floatUp {
+  0% {
+    transform: translateY(110vh) rotate(0deg) scale(0.8);
+    opacity: 0;
+  }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.7; }
+  100% {
+    transform: translateY(-10vh) rotate(360deg) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* =========================================
+   8. ALBUM SECTION (COVERFLOW)
+========================================= */
+.album-section {
+  padding: 50px 20px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.swiper {
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 250px;
+  height: 350px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  /* Bỏ preserve-3d vì nó có thể ép browser dùng low-quality rasterization */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px; 
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
+  /* Ép mượt ảnh */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0) scale(1.0, 1.0);
+  filter: blur(0);
+}
+/* Tuỳ chỉnh nút chấm chấm ở dưới */
+.swiper-pagination-bullet {
+  background: #ccc;
+  opacity: 1;
+}
+.swiper-pagination-bullet-active {
+  background: #ff4d6d;
+}
+
+/* =========================================
+   6. WISH MODAL
+========================================= */
+.wish-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+.wish-modal.hidden {
+  display: none;
+}
+.wish-modal-content {
+  background: var(--bg-white);
+  padding: 25px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #666;
+  cursor: pointer;
+}
+.wish-modal-content h3 {
+  margin-bottom: 20px;
+  color: var(--text-dark);
+  font-size: 1.5rem;
+}
+.wish-modal-content input,
+.wish-modal-content textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+.wish-modal-content textarea {
+  resize: vertical;
+}
+
+/* =========================================
+   9. LIGHTBOX MODAL
+========================================= */
+.lightbox {
+  position: fixed;
+  z-index: 9999;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0,0,0,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+.lightbox.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.lightbox-content {
+  max-width: 90%;
+  max-height: 90vh;
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.5);
+  animation: zoomIn 0.3s ease;
+  object-fit: contain;
+}
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10000;
+  transition: color 0.2s;
+}
+.lightbox-close:hover {
+  color: #ff4d6d;
+}
+
+
