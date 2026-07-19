@@ -76,42 +76,23 @@ body, html {
   z-index: 10001;
   transition: all 1s ease;
   cursor: pointer;
-  animation: bounceHint 2s infinite alternate;
 }
-@keyframes bounceHint {
-  0% { transform: translateX(-50%) translateY(0); }
-  100% { transform: translateX(-50%) translateY(-10px); }
+.elegant-hint {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+  letter-spacing: 2px;
+  white-space: nowrap;
+  animation: breathingText 2.5s ease-in-out infinite alternate;
 }
-.tap-indicator {
-  width: 60px;
-  height: 60px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 2px solid white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.5rem;
-  backdrop-filter: blur(5px);
-  box-shadow: 0 0 15px rgba(0,0,0,0.5);
-  position: relative;
-}
-.tap-indicator::after {
-  content: "";
-  position: absolute;
-  top: -2px; left: -2px; right: -2px; bottom: -2px;
-  border: 2px solid white;
-  border-radius: 50%;
-  animation: tapRipple 1.5s infinite;
-}
-@keyframes tapRipple {
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(1.6); opacity: 0; }
+@keyframes breathingText {
+  0% { transform: scale(0.95); opacity: 0.6; }
+  100% { transform: scale(1.05); opacity: 1; text-shadow: 0 4px 15px rgba(255,255,255,0.4); }
 }
 /* Khi cửa mở, icon to lên và mờ dần */
 .door-overlay.open .door-center-icon {
-  transform: translateX(-50%) scale(1.5);
   opacity: 0;
   pointer-events: none;
 }
