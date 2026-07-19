@@ -47,8 +47,31 @@ document.addEventListener('DOMContentLoaded', () => {
     musicOverlay.classList.add('hidden');
     fixedUi.classList.remove('hidden');
     
-    // Ở đây bạn có thể thêm logic bật nhạc, vd: document.getElementById('bg-music').play();
+    // Bật nhạc
+    const bgMusic = document.getElementById('bg-music');
+    if (bgMusic) {
+      bgMusic.play().catch(e => console.log("Trình duyệt chặn autoplay:", e));
+    }
   });
+
+  // LOGIC NÚT BẬT/TẮT NHẠC
+  const musicBtn = document.getElementById('music-btn');
+  if (musicBtn) {
+    musicBtn.addEventListener('click', () => {
+      const bgMusic = document.getElementById('bg-music');
+      if (!bgMusic) return;
+      const icon = musicBtn.querySelector('i');
+      if (bgMusic.paused) {
+        bgMusic.play();
+        icon.classList.remove('fa-volume-mute');
+        icon.classList.add('fa-volume-up');
+      } else {
+        bgMusic.pause();
+        icon.classList.remove('fa-volume-up');
+        icon.classList.add('fa-volume-mute');
+      }
+    });
+  }
 
   // --- LOGIC ĐỔI GIỜ THEO LINK ---
   const urlParams = new URLSearchParams(window.location.search);
