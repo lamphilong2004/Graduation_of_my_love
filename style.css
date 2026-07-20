@@ -14,11 +14,12 @@
 
 body, html {
   width: 100%;
-  height: 100%;
-  background-image: linear-gradient(to right, #fff1f2, #ffffff, #fdf2f8); /* Gradient mượt mà chuẩn Tailwind */
+  min-height: 100vh;
+  background-image: linear-gradient(to right, #fff1f2, #ffffff, #fdf2f8);
   font-family: 'Montserrat', sans-serif;
   color: var(--text-dark);
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* =========================================
@@ -162,6 +163,7 @@ body, html {
 .hero-section {
   position: relative;
   height: 100vh;
+  height: 100dvh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -693,7 +695,7 @@ body, html {
 ========================================= */
 #floating-container {
   position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
+  top: 0; left: 0; right: 0; bottom: 0;
   pointer-events: none;
   z-index: 1; /* Nằm dưới text nhưng trên background */
   overflow: hidden;
