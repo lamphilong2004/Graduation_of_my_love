@@ -257,7 +257,8 @@ body, html {
 
 .hero-title {
   font-family: 'Great Vibes', cursive;
-  font-size: 4rem; /* Chữ uốn lượn nên cần to hơn */
+  font-size: clamp(2.8rem, 9vw, 4rem); /* Responsive to fit mobile screens */
+  white-space: nowrap; /* Force single line */
   font-weight: 400; /* Great vibes chỉ có weight 400 */
   background: linear-gradient(90deg, #ff4d6d, #c9184a);
   -webkit-background-clip: text;
