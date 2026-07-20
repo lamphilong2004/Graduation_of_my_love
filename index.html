@@ -497,7 +497,17 @@
 
   <!-- Secret Coder Modal -->
   <div id="secret-modal" class="lightbox hidden" style="z-index: 10005; backdrop-filter: blur(8px);">
-    <div class="alert-content" style="background: rgba(255, 255, 255, 0.98); background-image: url('images/pink_watercolor_custom.png'); background-size: cover; background-blend-mode: overlay; padding: 40px 30px; border-radius: 25px; text-align: center; max-width: 90%; width: 450px; box-shadow: 0 20px 50px rgba(255, 77, 109, 0.4); border: 2px solid #ff4d6d; position: relative;">
+    <!-- Style specifically for scrollbar -->
+<style>
+  #secret-modal .alert-content::-webkit-scrollbar {
+    width: 6px;
+  }
+  #secret-modal .alert-content::-webkit-scrollbar-thumb {
+    background-color: #ffb3c1;
+    border-radius: 10px;
+  }
+</style>
+<div class="alert-content" style="background: rgba(255, 255, 255, 0.98); background-image: url('images/pink_watercolor_custom.png'); background-size: cover; background-blend-mode: overlay; padding: 40px 30px; border-radius: 25px; text-align: center; max-width: 90%; width: 450px; box-shadow: 0 20px 50px rgba(255, 77, 109, 0.4); border: 2px solid #ff4d6d; position: relative; max-height: 80vh; overflow-y: auto;">
       <span id="close-secret-btn" style="position: absolute; top: 15px; right: 20px; font-size: 1.5rem; color: #ff4d6d; cursor: pointer; font-weight: bold;">&times;</span>
       
       <div style="font-size: 4rem; color: #ff4d6d; margin-bottom: 15px; animation: heartbeat 2s infinite;">
@@ -507,7 +517,7 @@
       <h3 style="font-family: 'Great Vibes', cursive; font-size: 3rem; color: #ff4d6d; margin-bottom: 10px; line-height: 1.2;">Phi Long của Em</h3>
       
       <div style="background: rgba(255,255,255,0.8); padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px dashed #ffb3c1;">
-        <p style="font-size: 1rem; color: #555; line-height: 1.7; font-weight: 500; font-family: 'Montserrat', sans-serif; text-align: justify;">
+        <p style="font-size: 1.05rem; color: #444; line-height: 1.8; font-weight: 500; font-family: 'Playfair Display', serif; text-align: justify; font-style: italic;">
           Gửi em, cô cử nhân Kế Toán xinh đẹp nhất của anh! <br><br>
           Nhìn em rạng rỡ trong chiếc áo tốt nghiệp hôm nay, bao nhiêu ký ức lại ùa về. Từ những ngày tháng cấp 3 anh vất vả trồng cây si theo đuổi, đến lúc lên đại học tụi mình dọn về chung một mái nhà, cùng nhau vượt qua biết bao nhiêu là khó khăn, vui buồn. Thật hạnh phúc vì đến tận bây giờ, hai đứa mình vẫn đang nắm chặt tay nhau.<br><br>
           Hôm nay em đã chính thức ra trường, còn anh vẫn đang là cậu sinh viên IT năm cuối. Tương lai sắp tới, dù anh có tiếp tục gõ code làm một chàng IT, hay rẽ hướng học thêm 2.5 năm để khoác lên mình màu áo Công an... thì chặng cuối của hành trình đó đều chỉ có một mục tiêu duy nhất: <strong>Đó là được cưới em làm vợ!</strong> <br><br>
