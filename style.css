@@ -56,6 +56,8 @@ body, html {
 @media (max-width: 768px) {
   .door::before {
     background-size: cover;
+    background-image: url('images/55.jpg');
+    background-position: center;
   }
 }
 .door-left { 
