@@ -383,6 +383,29 @@
             gia</button>
         </div>
 
+
+        <!-- Secret Coder Envelope -->
+        <style>
+          @keyframes heartbeat {
+            0% { transform: scale(1); }
+            20% { transform: scale(1.15); }
+            40% { transform: scale(1); }
+            60% { transform: scale(1.15); }
+            80% { transform: scale(1); }
+            100% { transform: scale(1); }
+          }
+          .secret-envelope-container:hover {
+            transform: scale(1.1);
+            transition: 0.3s;
+          }
+        </style>
+        <div class="secret-envelope-container animate-on-scroll" style="text-align: center; margin-bottom: 30px; margin-top: -10px; cursor: pointer; transition: 0.3s;" id="secret-envelope-btn">
+          <div style="font-size: 3.5rem; color: #ff4d6d; animation: heartbeat 1.5s infinite; text-shadow: 0 0 15px rgba(255, 77, 109, 0.5);">
+            <i class="fas fa-envelope-open-text"></i>
+          </div>
+          <p style="font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #ff4d6d; margin-top: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;">Mở ra nhé!</p>
+        </div>
+
         <p class="thankyou-ending">Hẹn mọi người tại buổi lễ nhé!</p>
 
         <div class="footer-branding">
@@ -413,9 +436,7 @@
 
     <!-- Khung chat trôi nổi -->
     <div class="floating-chat" id="chat-container">
-      <div class="chat-bubble vip-bubble" style="background: linear-gradient(135deg, #ff0055, #ff007f); color: #fff; border: 2px solid #fff; box-shadow: 0 0 15px rgba(255, 0, 127, 0.5);">
-        <i class="fas fa-crown" style="margin-right: 6px; color: #ffd700;"></i><strong>Phi Long của Em:</strong> Chúc mừng công chúa của anh đã hoàn thành xuất sắc chặng đường Đại học! Tương lai phía trước dù có ra sao, cứ yên tâm bước tới vì luôn có anh ở đằng sau làm chỗ dựa. Hôm nay em là cô cử nhân xinh đẹp nhất! Yêu em vô cùng! ❤️
-      </div>
+      
     </div>
 
   </div>
