@@ -141,15 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 5. ANIMATION TIN NHẮN TRÔI LÊN
   const chatContainer = document.getElementById('chat-container');
-  // Simple logic: clone the first message, append to bottom, remove top to loop
-  setInterval(() => {
-    if (chatContainer.children.length > 0) {
-      const first = chatContainer.children[0];
-      const clone = first.cloneNode(true);
-      first.remove();
-      chatContainer.appendChild(clone);
-    }
-  }, 3500);
+
 
   // HÀM HIỂN THỊ THÔNG BÁO CUSTOM
   function showCustomAlert(title, message, iconClass = 'fa-heart') {
