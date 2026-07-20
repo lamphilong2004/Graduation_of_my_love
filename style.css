@@ -18,8 +18,12 @@ body, html {
   background-image: linear-gradient(to right, #fff1f2, #ffffff, #fdf2f8);
   font-family: 'Montserrat', sans-serif;
   color: var(--text-dark);
+}
+
+.main-container {
   overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  position: relative;
 }
 
 /* =========================================
