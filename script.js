@@ -460,3 +460,27 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+
+
+  // XỬ LÝ SỰ KIỆN CHO SECRET ENVELOPE (LỜI CHÚC CỦA NGƯỜI YÊU)
+  const secretBtn = document.getElementById("secret-envelope-btn");
+  const secretModal = document.getElementById("secret-modal");
+  const closeSecretBtn = document.getElementById("close-secret-btn");
+
+  if (secretBtn && secretModal && closeSecretBtn) {
+    secretBtn.addEventListener("click", () => {
+      secretModal.classList.remove("hidden");
+    });
+
+    closeSecretBtn.addEventListener("click", () => {
+      secretModal.classList.add("hidden");
+    });
+  }
+
+
+  const secretOkBtn = document.getElementById("secret-modal-ok");
+  if (secretOkBtn && secretModal) {
+    secretOkBtn.addEventListener("click", () => {
+      secretModal.classList.add("hidden");
+    });
+  }
