@@ -462,24 +462,98 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+
+
+
   // XỬ LÝ SỰ KIỆN CHO SECRET ENVELOPE (LỜI CHÚC CỦA NGƯỜI YÊU)
   const secretBtn = document.getElementById("secret-envelope-btn");
   const secretModal = document.getElementById("secret-modal");
   const closeSecretBtn = document.getElementById("close-secret-btn");
+  const secretOkBtn = document.getElementById("secret-modal-ok");
 
-  if (secretBtn && secretModal && closeSecretBtn) {
+  const authModal1 = document.getElementById("auth-modal-1");
+  const closeAuth1 = document.getElementById("close-auth-1");
+  const authPwdInput = document.getElementById("auth-pwd-input");
+  const authSubmitBtn = document.getElementById("auth-submit-btn");
+  const authErrorMsg = document.getElementById("auth-error-msg");
+
+  const authModal2 = document.getElementById("auth-modal-2");
+  const authAnsYes = document.getElementById("auth-ans-yes");
+  const authAnsNo = document.getElementById("auth-ans-no");
+
+  if (secretBtn) {
     secretBtn.addEventListener("click", () => {
-      secretModal.classList.remove("hidden");
+      // Mở modal 1 (Mật khẩu) thay vì mở thẳng secret modal
+      authModal1.classList.remove("hidden");
+      authPwdInput.value = "";
+      authErrorMsg.style.display = "none";
+      setTimeout(() => authPwdInput.focus(), 100);
+    });
+  }
+
+  if (closeAuth1) {
+    closeAuth1.addEventListener("click", () => {
+      authModal1.classList.add("hidden");
+    });
+  }
+
+  if (authSubmitBtn) {
+    authSubmitBtn.addEventListener("click", () => {
+      if (authPwdInput.value.trim() === "14042022") {
+        // Đúng mật khẩu
+        authModal1.classList.add("hidden");
+        authModal2.classList.remove("hidden");
+      } else {
+        // Sai mật khẩu
+        authErrorMsg.style.display = "block";
+        const alertBox = authModal1.querySelector(".alert-content");
+        alertBox.classList.remove("shake");
+        void alertBox.offsetWidth; // trigger reflow
+        alertBox.classList.add("shake");
+      }
     });
 
+    authPwdInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") authSubmitBtn.click();
+    });
+  }
+
+  if (authAnsNo) {
+    const runaway = () => {
+      const container = authAnsNo.parentElement;
+      // Trừ hao kích thước nút để không bay ra ngoài
+      const maxX = container.clientWidth - authAnsNo.clientWidth;
+      const maxY = container.clientHeight - authAnsNo.clientHeight + 100; // allow moving slightly lower
+      
+      const newX = Math.max(0, Math.random() * maxX);
+      const newY = Math.max(0, Math.random() * maxY - 50); // allow moving up and down
+      
+      authAnsNo.style.transition = "0.2s";
+      authAnsNo.style.left = newX + "px";
+      authAnsNo.style.top = newY + "px";
+    };
+
+    authAnsNo.addEventListener("mouseover", runaway);
+    authAnsNo.addEventListener("touchstart", (e) => {
+      e.preventDefault(); // Ngăn click trên điện thoại
+      runaway();
+    }, {passive: false});
+  }
+
+  if (authAnsYes) {
+    authAnsYes.addEventListener("click", () => {
+      authModal2.classList.add("hidden");
+      secretModal.classList.remove("hidden");
+    });
+  }
+
+  if (closeSecretBtn) {
     closeSecretBtn.addEventListener("click", () => {
       secretModal.classList.add("hidden");
     });
   }
-
-
-  const secretOkBtn = document.getElementById("secret-modal-ok");
-  if (secretOkBtn && secretModal) {
+  
+  if (secretOkBtn) {
     secretOkBtn.addEventListener("click", () => {
       secretModal.classList.add("hidden");
     });

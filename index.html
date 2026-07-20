@@ -458,6 +458,43 @@
     </div>
   </div>
 
+  <!-- Auth Modal 1: Password -->
+  <style>
+    .shake {
+      animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    }
+    @keyframes shake {
+      10%, 90% { transform: translate3d(-1px, 0, 0); }
+      20%, 80% { transform: translate3d(2px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+      40%, 60% { transform: translate3d(4px, 0, 0); }
+    }
+  </style>
+  <div id="auth-modal-1" class="lightbox hidden" style="z-index: 10006; backdrop-filter: blur(5px);">
+    <div class="alert-content" style="background: rgba(255, 255, 255, 0.95); padding: 30px; border-radius: 20px; text-align: center; max-width: 90%; width: 350px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 2px solid #ff4d6d;">
+      <span id="close-auth-1" style="position: absolute; top: 15px; right: 20px; font-size: 1.5rem; color: #ff4d6d; cursor: pointer; font-weight: bold;">&times;</span>
+      <div style="font-size: 3rem; color: #ff4d6d; margin-bottom: 15px;"><i class="fas fa-lock"></i></div>
+      <h3 style="font-family: 'Montserrat', sans-serif; font-size: 1.3rem; color: #ff4d6d; margin-bottom: 10px; font-weight: bold;">Xác thực bảo mật</h3>
+      <p style="font-size: 0.95rem; color: #555; margin-bottom: 20px; font-weight: 500;">Bức thư này đã được mã hóa bằng tình yêu. Hãy nhập đúng ngày quen nhau (DDMMYYYY) để giải mã!</p>
+      <input type="password" id="auth-pwd-input" placeholder="Nhập mật khẩu..." style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ffb3c1; border-radius: 8px; font-family: 'Montserrat', sans-serif; text-align: center; font-size: 1.1rem; letter-spacing: 2px;">
+      <p id="auth-error-msg" style="color: red; font-size: 0.85rem; margin-bottom: 15px; display: none; font-weight: bold;">Mật khẩu không đúng! Bạn không được phép truy cập.</p>
+      <button id="auth-submit-btn" class="pink-btn" style="width: 100%; padding: 10px; font-weight: bold;">Mở khóa</button>
+    </div>
+  </div>
+
+  <!-- Auth Modal 2: Runaway Button -->
+  <div id="auth-modal-2" class="lightbox hidden" style="z-index: 10006; backdrop-filter: blur(5px);">
+    <div class="alert-content" style="background: rgba(255, 255, 255, 0.95); padding: 40px 30px; border-radius: 20px; text-align: center; max-width: 90%; width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 2px solid #ff4d6d; position: relative; min-height: 250px;">
+      <div style="font-size: 3rem; color: #ff4d6d; margin-bottom: 15px;"><i class="fas fa-question-circle"></i></div>
+      <h3 style="font-family: 'Montserrat', sans-serif; font-size: 1.2rem; color: #333; margin-bottom: 30px; line-height: 1.5; font-weight: bold;">Hỏi nhỏ: Ai là người thương em nhất trên đời?</h3>
+      
+      <div style="position: relative; height: 100px; width: 100%;">
+        <button id="auth-ans-yes" class="pink-btn" style="position: absolute; left: 10%; top: 20px; width: 120px; padding: 10px; font-size: 1rem; font-weight: bold; z-index: 2;">Anh Long</button>
+        <button id="auth-ans-no" class="dark-btn" style="position: absolute; right: 10%; top: 20px; width: 120px; padding: 10px; font-size: 1rem; background: #a8a29e; color: white; font-weight: bold; z-index: 1;">Không biết</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Secret Coder Modal -->
   <div id="secret-modal" class="lightbox hidden" style="z-index: 10005; backdrop-filter: blur(8px);">
     <div class="alert-content" style="background: rgba(255, 255, 255, 0.98); background-image: url('images/pink_watercolor_custom.png'); background-size: cover; background-blend-mode: overlay; padding: 40px 30px; border-radius: 25px; text-align: center; max-width: 90%; width: 450px; box-shadow: 0 20px 50px rgba(255, 77, 109, 0.4); border: 2px solid #ff4d6d; position: relative;">
