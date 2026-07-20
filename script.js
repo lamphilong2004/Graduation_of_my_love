@@ -80,15 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
   let displayTime = "10 giờ 00"; // Mặc định
   let targetTimeStr = "10:00:00";
 
-  if (timeParam === '11h15') {
-    displayTime = "11 giờ 15";
-    targetTimeStr = "11:15:00";
-  } else if (timeParam === '11h') {
+  if (timeParam === '11h') {
     displayTime = "11 giờ 00";
     targetTimeStr = "11:00:00";
-  } else if (timeParam === '11h30') {
-    displayTime = "11 giờ 30";
-    targetTimeStr = "11:30:00";
+  } else if (timeParam === '11h40') {
+    displayTime = "11 giờ 40";
+    targetTimeStr = "11:40:00";
   } else if (timeParam === '17h') {
     displayTime = "17 giờ 00";
     targetTimeStr = "17:00:00";
@@ -102,12 +99,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const eventTimeEl = document.getElementById('event-time');
   if (eventTimeEl) {
-    if (timeParam === '11h15') {
-      eventTimeEl.innerText = "11h15";
-    } else if (timeParam === '11h') {
+    if (timeParam === '11h') {
       eventTimeEl.innerText = "11h00";
-    } else if (timeParam === '11h30') {
-      eventTimeEl.innerText = "11h30";
+    } else if (timeParam === '11h40') {
+      eventTimeEl.innerText = "11h40";
     } else if (timeParam === '17h') {
       eventTimeEl.innerText = "17h00";
     } else if (timeParam) {
