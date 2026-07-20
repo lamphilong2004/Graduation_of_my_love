@@ -185,17 +185,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const inlineWishNameInput = document.getElementById('inline-wish-name');
   const inlineWishTextInput = document.getElementById('inline-wish-text');
 
-  let isFirstLoad = true;
-
   // Lắng nghe dữ liệu từ Firebase
   onChildAdded(wishesRef, (snapshot) => {
     const data = snapshot.val();
-
-    // Xóa các tin nhắn mẫu đi khi có tin nhắn thật đầu tiên
-    if (isFirstLoad) {
-      chatContainer.innerHTML = '';
-      isFirstLoad = false;
-    }
 
     const newBubble = document.createElement('div');
     newBubble.className = 'chat-bubble';
