@@ -25,18 +25,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const musicOverlay = document.getElementById('music-overlay');
   const mainContent = document.getElementById('main-content');
   const fixedUi = document.getElementById('fixed-ui');
-  
+
   // 1. CLICK ĐỂ MỞ CỬA (Bấm vào bất cứ đâu trên màn hình cánh cửa)
   doorOverlay.addEventListener('click', () => {
     // Kích hoạt animation mở cửa
     doorOverlay.classList.add('open');
-    
+
     // Đợi cửa mở xong thì ẩn hẳn div đó đi và hiện màn hình "Nghe nhạc"
     setTimeout(() => {
       doorOverlay.classList.add('hidden-fully');
       mainContent.classList.remove('hidden');
       musicOverlay.classList.remove('hidden');
-      
+
       // Khởi tạo các animation scroll
       initScrollAnimations();
     }, 1200);
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
   musicOverlay.addEventListener('click', () => {
     musicOverlay.classList.add('hidden');
     fixedUi.classList.remove('hidden');
-    
+
     // Bật nhạc
     const bgMusic = document.getElementById('bg-music');
     if (bgMusic) {
@@ -76,11 +76,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- LOGIC ĐỔI GIỜ THEO LINK ---
   const urlParams = new URLSearchParams(window.location.search);
   const timeParam = urlParams.get('time');
-  
+
   let displayTime = "10 giờ 00"; // Mặc định
   let targetTimeStr = "10:00:00";
 
-  if (timeParam === '11h') {
+  if (timeParam === '11h15') {
+    displayTime = "11 giờ 15";
+    targetTimeStr = "11:15:00";
+  } else if (timeParam === '11h') {
     displayTime = "11 giờ 00";
     targetTimeStr = "11:00:00";
   } else if (timeParam === '11h30') {
@@ -97,13 +100,28 @@ document.addEventListener('DOMContentLoaded', () => {
     timeDisplayEl.innerText = displayTime;
   }
 
+  const eventTimeEl = document.getElementById('event-time');
+  if (eventTimeEl) {
+    if (timeParam === '11h15') {
+      eventTimeEl.innerText = "11h15";
+    } else if (timeParam === '11h') {
+      eventTimeEl.innerText = "11h00";
+    } else if (timeParam === '11h30') {
+      eventTimeEl.innerText = "11h30";
+    } else if (timeParam === '17h') {
+      eventTimeEl.innerText = "17h00";
+    } else if (timeParam) {
+      eventTimeEl.innerText = timeParam;
+    }
+  }
+
   // 3. COUNTDOWN TIMER
   const countDownDate = new Date("Jul 25, 2026 " + targetTimeStr).getTime();
-  const timerInterval = setInterval(function() {
+  const timerInterval = setInterval(function () {
     const now = new Date().getTime();
     const distance = countDownDate - now;
 
-    if(distance < 0) return clearInterval(timerInterval);
+    if (distance < 0) return clearInterval(timerInterval);
 
     document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
     document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
@@ -130,13 +148,37 @@ document.addEventListener('DOMContentLoaded', () => {
   const chatContainer = document.getElementById('chat-container');
   // Simple logic: clone the first message, append to bottom, remove top to loop
   setInterval(() => {
-    if(chatContainer.children.length > 0) {
+    if (chatContainer.children.length > 0) {
       const first = chatContainer.children[0];
       const clone = first.cloneNode(true);
       first.remove();
       chatContainer.appendChild(clone);
     }
   }, 3500);
+
+  // HÀM HIỂN THỊ THÔNG BÁO CUSTOM
+  function showCustomAlert(title, message, iconClass = 'fa-heart') {
+    const alertModal = document.getElementById('custom-alert-modal');
+    const alertTitle = document.getElementById('custom-alert-title');
+    const alertMsg = document.getElementById('custom-alert-msg');
+    const alertIcon = document.getElementById('custom-alert-icon');
+    const alertOk = document.getElementById('custom-alert-ok');
+
+    if (alertModal && alertTitle && alertMsg && alertIcon) {
+      alertTitle.innerHTML = title;
+      alertMsg.innerHTML = message;
+      alertIcon.innerHTML = `<i class="fas ${iconClass}"></i>`;
+      alertModal.classList.remove('hidden');
+
+      if (alertOk) {
+        alertOk.onclick = () => {
+          alertModal.classList.add('hidden');
+        };
+      }
+    } else {
+      alert(message); // Fallback
+    }
+  }
 
   // 6. XỬ LÝ GỬI LỜI CHÚC (INLINE FORM - KẾT NỐI FIREBASE)
   const submitInlineWishBtn = document.getElementById('submit-inline-wish-btn');
@@ -148,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Lắng nghe dữ liệu từ Firebase
   onChildAdded(wishesRef, (snapshot) => {
     const data = snapshot.val();
-    
+
     // Xóa các tin nhắn mẫu đi khi có tin nhắn thật đầu tiên
     if (isFirstLoad) {
       chatContainer.innerHTML = '';
@@ -157,7 +199,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const newBubble = document.createElement('div');
     newBubble.className = 'chat-bubble';
-    newBubble.innerHTML = `<strong>${data.name}:</strong> ${data.text}`;
+
+    // Đổi icon theo trạng thái tham gia để phân biệt tinh tế (giữ chung 1 màu nền để không phân biệt đối xử)
+    let iconHTML = '';
+    
+    // Nền hồng rực rỡ chung cho tất cả
+    newBubble.style.background = 'linear-gradient(135deg, #ff8fa3, #ff4d6d)'; 
+    newBubble.style.color = '#ffffff';
+    newBubble.style.border = '1px solid #ff4d6d';
+
+    if (data.isAttending === false) {
+      // Chỉ gửi lời chúc
+      iconHTML = '<i class="fas fa-envelope-open-text" style="margin-right: 6px;"></i>';
+    } else {
+      // Xác nhận tham gia
+      iconHTML = '<i class="fas fa-graduation-cap" style="margin-right: 6px;"></i>';
+    }
+
+    newBubble.innerHTML = `${iconHTML}<strong>${data.name}:</strong> ${data.text}`;
     chatContainer.appendChild(newBubble);
   });
 
@@ -165,43 +224,144 @@ document.addEventListener('DOMContentLoaded', () => {
     submitInlineWishBtn.addEventListener('click', () => {
       const name = inlineWishNameInput.value.trim();
       const text = inlineWishTextInput.value.trim();
-      
+      // Khách chỉ dùng form này là gửi lời chúc (không tham gia) -> xám
+      const isAttending = false;
+
       if (!name || !text) {
-        alert("Vui lòng nhập đầy đủ tên và lời chúc nhé!");
+        showCustomAlert("Khoan đã nào!", "Vui lòng nhập đầy đủ tên và lời chúc nhé!", "fa-exclamation-circle");
         return;
       }
-      
+
       // Đổi thành "Đang gửi..." để user không bấm liên tục
-      const originalText = submitInlineWishBtn.innerText;
-      submitInlineWishBtn.innerText = "Đang gửi...";
+      const originalText = submitInlineWishBtn.innerHTML;
+      submitInlineWishBtn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Đang gửi...";
       submitInlineWishBtn.disabled = true;
 
       // Đẩy dữ liệu lên Firebase
       push(wishesRef, {
         name: name,
         text: text,
+        isAttending: isAttending,
         timestamp: Date.now()
       }).then(() => {
         // Xóa form
         inlineWishNameInput.value = '';
         inlineWishTextInput.value = '';
-        submitInlineWishBtn.innerText = originalText;
+        submitInlineWishBtn.innerHTML = originalText;
         submitInlineWishBtn.disabled = false;
-        alert("Gửi lời chúc thành công! Bạn hãy nhìn lên khung chat nhé!");
+        showCustomAlert("Tuyệt vời!", "Gửi lời chúc thành công! Bạn hãy nhìn lên khung chat nhé!", "fa-paper-plane");
       }).catch((error) => {
         console.error("Lỗi khi gửi lời chúc:", error);
-        submitInlineWishBtn.innerText = originalText;
+        submitInlineWishBtn.innerHTML = originalText;
         submitInlineWishBtn.disabled = false;
-        alert("Có lỗi xảy ra, vui lòng thử lại sau.");
+        showCustomAlert("Ôi hỏng!", "Có lỗi xảy ra, vui lòng thử lại sau.", "fa-times-circle");
       });
     });
+  }
+
+  // 6.5 LOGIC NÚT XÁC NHẬN THAM GIA
+  const confirmAttendanceBtn = document.getElementById('confirm-attendance-btn');
+  const customPromptModal = document.getElementById('custom-prompt-modal');
+  const customPromptName = document.getElementById('custom-prompt-name');
+  const customPromptText = document.getElementById('custom-prompt-text');
+  const customPromptConfirm = document.getElementById('custom-prompt-ok');
+  const customPromptCancel = document.getElementById('custom-prompt-cancel');
+  const customPromptTitle = document.getElementById('custom-prompt-title');
+  const customPromptMsg = document.getElementById('custom-prompt-msg');
+  const customPromptIcon = document.getElementById('custom-prompt-icon');
+
+  // Lưu lại tên nếu họ đã gửi form
+  let savedName = "";
+
+  // Sửa lại submitInlineWishBtn để lưu tên
+  if (submitInlineWishBtn) {
+    const oldOnClick = submitInlineWishBtn.onclick;
+    submitInlineWishBtn.addEventListener('click', () => {
+       savedName = inlineWishNameInput.value.trim(); // Lưu lại tên trước khi form bị xóa
+    });
+  }
+
+  function proceedWithConfirmation(name, text) {
+    const originalHtml = confirmAttendanceBtn.innerHTML;
+    confirmAttendanceBtn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Đang gửi...";
+    confirmAttendanceBtn.disabled = true;
+
+    push(wishesRef, {
+      name: name,
+      text: text || "Chúc Mừng!",
+      isAttending: true,
+      timestamp: Date.now()
+    }).then(() => {
+      confirmAttendanceBtn.innerHTML = "<i class='fas fa-check'></i> Đã xác nhận tham gia";
+      confirmAttendanceBtn.style.background = "#4CAF50";
+
+      showCustomAlert("Cảm ơn bạn!", `Hẹn gặp lại <strong>${name}</strong> ở tại buổi lễ tốt nghiệp của mình nhé !!!`, "fa-heart");
+    }).catch((error) => {
+      console.error('Lỗi khi xác nhận:', error);
+      confirmAttendanceBtn.innerHTML = originalHtml;
+      confirmAttendanceBtn.disabled = false;
+      showCustomAlert("Ôi hỏng!", "Có lỗi xảy ra khi xác nhận. Bạn thử lại sau nhé.", "fa-times-circle");
+    });
+  }
+
+  if (confirmAttendanceBtn) {
+    confirmAttendanceBtn.addEventListener('click', () => {
+      let name = inlineWishNameInput.value.trim() || savedName;
+      let text = inlineWishTextInput.value.trim();
+
+      if (!name) {
+        if (customPromptModal) {
+          if(customPromptTitle) customPromptTitle.innerHTML = "Nhập tên của bạn";
+          if(customPromptMsg) customPromptMsg.innerHTML = "Hãy để lại tên để mình biết bạn sẽ đến nhé!";
+          if(customPromptIcon) customPromptIcon.innerHTML = '<i class="fas fa-graduation-cap"></i>';
+          if(customPromptConfirm) customPromptConfirm.innerHTML = "Xác nhận";
+          
+          if(customPromptText) customPromptText.style.display = 'none'; // Ẩn trường nhập lời chúc
+
+          customPromptName.value = '';
+          customPromptModal.classList.remove('hidden');
+          setTimeout(() => customPromptName.focus(), 100);
+        } else {
+          name = prompt("Vui lòng nhập tên của bạn:");
+          if (name && name.trim() !== "") {
+            savedName = name;
+            proceedWithConfirmation(name, "");
+          }
+        }
+      } else {
+        proceedWithConfirmation(name, text);
+      }
+    });
+
+    if (customPromptConfirm && customPromptCancel) {
+      customPromptCancel.addEventListener('click', () => {
+        customPromptModal.classList.add('hidden');
+      });
+
+      customPromptConfirm.addEventListener('click', () => {
+        const inputName = customPromptName.value.trim();
+        if (!inputName) {
+          customPromptName.focus();
+          return;
+        }
+        customPromptModal.classList.add('hidden');
+        savedName = inputName;
+        proceedWithConfirmation(inputName, "");
+      });
+
+      customPromptName.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          customPromptConfirm.click();
+        }
+      });
+    }
   }
 
   // 7. HIỆU ỨNG BAY BAY CHILL
   const floatingContainer = document.getElementById('floating-container');
   // Bạn có thể đổi icon tùy thích ở đây (nón tốt nghiệp, ngôi sao, hoa bồ công anh...)
   const floatingItems = ['🎓', '✨', '☁️', '🌸'];
-  
+
   if (floatingContainer) {
     setInterval(() => {
       // Chỉ tạo hiệu ứng nếu màn hình chính đang hiện (đã mở cửa)
@@ -210,16 +370,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const el = document.createElement('div');
       el.className = 'floating-item';
       el.innerText = floatingItems[Math.floor(Math.random() * floatingItems.length)];
-      
+
       // Random vị trí xuất phát từ trái sang phải (0 đến 100vw)
       el.style.left = Math.random() * 100 + 'vw';
       // Random thời gian bay (từ 10s đến 20s để tạo cảm giác chậm rãi, chill)
       el.style.animationDuration = (Math.random() * 10 + 10) + 's';
       // Random kích thước (từ 1rem đến 2rem)
       el.style.fontSize = (Math.random() * 1 + 1) + 'rem';
-      
+
       floatingContainer.appendChild(el);
-      
+
       // Tự động xóa khỏi DOM sau 22s để không bị nặng máy
       setTimeout(() => {
         el.remove();
@@ -235,20 +395,21 @@ document.addEventListener('DOMContentLoaded', () => {
     slidesPerView: "auto",
     observer: true,         // <-- FIX: Cập nhật Swiper khi nó chuyển từ display:none sang block
     observeParents: true,   // <-- FIX: Quan sát cả container cha
-    slideToClickedSlide: true, 
+    slideToClickedSlide: true,
     mousewheel: {
-      forceToAxis: true, 
+      forceToAxis: true,
     },
     coverflowEffect: {
-      rotate: 30, 
+      rotate: 30,
       stretch: 0,
-      depth: 150, 
+      depth: 150,
       modifier: 1,
-      slideShadows: true, 
+      slideShadows: true,
     },
     pagination: {
       el: ".swiper-pagination",
       clickable: true,
+      dynamicBullets: true,
     },
     loop: true,
     initialSlide: 1,
@@ -261,9 +422,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (lightbox && lightboxImg && lightboxClose) {
     const swiperSlides = document.querySelectorAll('.swiper-slide');
-    
+
     swiperSlides.forEach(slide => {
-      slide.addEventListener('click', function(e) {
+      slide.addEventListener('click', function (e) {
         // Chỉ phóng to nếu người dùng click vào ảnh đang ở giữa (active)
         // Nếu click ảnh hai bên, Swiper sẽ tự động trượt ảnh đó vào giữa
         if (slide.classList.contains('swiper-slide-active')) {
@@ -277,14 +438,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Đóng lightbox khi click nút X
-    lightboxClose.addEventListener('click', function() {
+    lightboxClose.addEventListener('click', function () {
       lightbox.classList.add('hidden');
     });
 
     // Đóng lightbox khi click ra ngoài ảnh
-    lightbox.addEventListener('click', function(e) {
+    lightbox.addEventListener('click', function (e) {
       if (e.target !== lightboxImg) {
         lightbox.classList.add('hidden');
+      }
+    });
+  }
+
+  // 10. CUSTOM ALERT MODAL LOGIC
+  const customAlertModal = document.getElementById('custom-alert-modal');
+  const customAlertCloseBtn = document.getElementById('custom-alert-close');
+
+  if (customAlertModal && customAlertCloseBtn) {
+    customAlertCloseBtn.addEventListener('click', () => {
+      customAlertModal.classList.add('hidden');
+    });
+
+    // Đóng khi click ra ngoài nội dung
+    customAlertModal.addEventListener('click', (e) => {
+      if (e.target === customAlertModal) {
+        customAlertModal.classList.add('hidden');
       }
     });
   }
