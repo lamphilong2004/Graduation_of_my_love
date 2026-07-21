@@ -15,13 +15,14 @@
 body, html {
   width: 100%;
   min-height: 100vh;
+  overflow-x: hidden;
   background-image: linear-gradient(to right, #fff1f2, #ffffff, #fdf2f8);
   font-family: 'Montserrat', sans-serif;
   color: var(--text-dark);
 }
 
 .main-container {
-  overflow-x: clip;
+  overflow-x: hidden;
   width: 100%;
   position: relative;
   padding-bottom: 100px;
