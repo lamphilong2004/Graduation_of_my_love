@@ -383,15 +383,15 @@ document.addEventListener('DOMContentLoaded', () => {
       stretch: 0,
       depth: 150,
       modifier: 1,
-      slideShadows: true,
+      slideShadows: false, // Tắt shadow để tránh sập GPU trên iOS khi kéo thả 66 ảnh
     },
     pagination: {
       el: ".swiper-pagination",
       clickable: true,
       dynamicBullets: true,
     },
-    loop: true,
-    initialSlide: 1,
+    loop: false, // Tắt loop để giảm 50% số lượng DOM (không nhân bản 66 ảnh nữa)
+    initialSlide: 0,
   });
 
   // 9. LIGHTBOX LOGIC (Xem ảnh full màn hình)
